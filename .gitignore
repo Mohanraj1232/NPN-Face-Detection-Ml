@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Datasets / raw & derived images (large, regenerable)
+age_prediction_up/
+age_prediction_pipeline/aligned/
+manifest*.csv
+
+# Trained models / training outputs (large, regenerable)
+age_prediction_pipeline/runs/
+*.pt
+*.pth
+
+# Torch / pip caches
+.cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
