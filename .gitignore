@@ -8,7 +8,7 @@ env/
 
 # Datasets / raw & derived images (large, regenerable)
 age_prediction_up/
-age_prediction_pipeline/aligned/full/test/
+age_prediction_pipeline/aligned/
 manifest*.csv
 
 # Trained models / training outputs (large, regenerable)
