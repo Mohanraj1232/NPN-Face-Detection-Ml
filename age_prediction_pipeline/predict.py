@@ -11,7 +11,9 @@ import torch
 import torch.nn.functional as F
 from PIL import Image
 
+from align_faces import align_image
 from data import build_transforms
+from face_detector import detect_landmarks
 from model import DualHeadAgeModel
 
 
@@ -26,6 +28,10 @@ def main(args):
 
     transform = build_transforms(train=False, img_size=ckpt["img_size"])
     img = Image.open(args.image).convert("RGB")
+    landmarks = detect_landmarks(img)
+    if landmarks is None:
+        raise SystemExit(f"No face detected in {args.image}, cannot align for prediction.")
+    img = align_image(img, landmarks, size=ckpt["img_size"])
     x = transform(img).unsqueeze(0).to(device)
 
     with torch.no_grad():
