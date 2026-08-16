@@ -79,4 +79,12 @@ def load_manifest(manifest_path: Path, dataset_scope: str, drop_failed_alignment
     if drop_failed_alignment and "alignment_ok" in df.columns:
         df = df[df["alignment_ok"]]
 
+    path_col = "aligned_path" if "aligned_path" in df.columns else "filepath"
+    exists = df[path_col].apply(lambda p: Path(p).exists())
+    n_missing = (~exists).sum()
+    if n_missing:
+        print(f"Warning: {n_missing} of {len(df)} rows point to missing files on disk "
+              f"({n_missing / len(df):.2%}) — dropping them from this run.")
+        df = df[exists]
+
     return df.reset_index(drop=True)
